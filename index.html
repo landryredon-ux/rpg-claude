@@ -6,374 +6,124 @@
   <title>Chroniques de Claude — RPG IA</title>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Crimson+Pro:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
   <style>
-    /* ===================== RESET & BASE ===================== */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --gold: #B87333;
-      --gold-light: #D4A853;
-      --bg: #0E0C0A;
-      --surface: #1A1612;
-      --surface2: #221E18;
-      --border: rgba(184,115,51,0.25);
-      --border-soft: rgba(255,255,255,0.07);
-      --text: #E8DCC8;
-      --text-muted: #9A8B76;
-      --text-hint: #5C5043;
-      --danger: #C0392B;
-      --success: #27AE60;
+      --gold: #B87333; --gold-light: #D4A853;
+      --bg: #0E0C0A; --surface: #1A1612; --surface2: #221E18;
+      --border: rgba(184,115,51,0.25); --border-soft: rgba(255,255,255,0.07);
+      --text: #E8DCC8; --text-muted: #9A8B76; --text-hint: #5C5043;
+      --danger: #C0392B; --warning: #E67E22; --success: #27AE60;
     }
+    html, body { min-height: 100vh; background: var(--bg); color: var(--text); font-family: 'Crimson Pro', Georgia, serif; }
+    body { display: flex; flex-direction: column; align-items: center; padding: 1.5rem 1rem 3rem; }
+    #app { width: 100%; max-width: 720px; }
 
-    html, body {
-      height: 100%;
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Crimson Pro', Georgia, serif;
-    }
+    /* HEADER */
+    .rpg-header { text-align: center; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 0.5px solid var(--border); }
+    .rpg-title { font-family: 'Cinzel Decorative', serif; font-size: 22px; font-weight: 700; color: var(--gold); letter-spacing: 2px; text-shadow: 0 0 40px rgba(184,115,51,0.3); }
+    .rpg-subtitle { font-size: 13px; color: var(--text-muted); margin-top: 4px; font-style: italic; }
 
-    body {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      min-height: 100vh;
-      padding: 2rem 1rem 3rem;
-    }
-
-    /* ===================== LAYOUT ===================== */
-    #app {
-      width: 100%;
-      max-width: 680px;
-    }
-
-    /* ===================== HEADER ===================== */
-    .rpg-header {
-      text-align: center;
-      margin-bottom: 2rem;
-      padding-bottom: 1.2rem;
-      border-bottom: 0.5px solid var(--border);
-    }
-
-    .rpg-title {
-      font-family: 'Cinzel Decorative', serif;
-      font-size: 24px;
-      font-weight: 700;
-      color: var(--gold);
-      letter-spacing: 2px;
-      text-shadow: 0 0 40px rgba(184,115,51,0.3);
-    }
-
-    .rpg-subtitle {
-      font-size: 14px;
-      color: var(--text-muted);
-      margin-top: 6px;
-      font-style: italic;
-    }
-
-    /* ===================== API KEY SETUP ===================== */
-    #api-screen {
-      background: var(--surface);
-      border: 0.5px solid var(--border);
-      border-radius: 12px;
-      padding: 1.6rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .api-title {
-      font-family: 'Cinzel Decorative', serif;
-      font-size: 13px;
-      color: var(--gold);
-      letter-spacing: 1px;
-      margin-bottom: 10px;
-    }
-
-    .api-note {
-      font-size: 13px;
-      color: var(--text-muted);
-      font-style: italic;
-      margin-bottom: 14px;
-      line-height: 1.6;
-    }
-
-    .api-note a {
-      color: var(--gold-light);
-      text-decoration: underline;
-    }
-
-    .api-row {
-      display: flex;
-      gap: 8px;
-    }
-
-    #api-input {
-      flex: 1;
-      font-family: 'Crimson Pro', serif;
-      font-size: 14px;
-      background: var(--surface2);
-      color: var(--text);
-      border: 0.5px solid var(--border-soft);
-      border-radius: 8px;
-      padding: 10px 14px;
-      letter-spacing: 1px;
-    }
-
+    /* API */
+    #api-screen { background: var(--surface); border: 0.5px solid var(--border); border-radius: 12px; padding: 1.4rem; margin-bottom: 1.5rem; }
+    .api-title { font-family: 'Cinzel Decorative', serif; font-size: 12px; color: var(--gold); letter-spacing: 1px; margin-bottom: 8px; }
+    .api-note { font-size: 13px; color: var(--text-muted); font-style: italic; margin-bottom: 12px; line-height: 1.6; }
+    .api-note a { color: var(--gold-light); text-decoration: underline; }
+    .api-row { display: flex; gap: 8px; }
+    #api-input { flex: 1; font-family: 'Crimson Pro', serif; font-size: 14px; background: var(--surface2); color: var(--text); border: 0.5px solid var(--border-soft); border-radius: 8px; padding: 10px 14px; }
     #api-input:focus { outline: none; border-color: var(--gold); }
-    #api-input::placeholder { color: var(--text-hint); letter-spacing: 0; }
-
-    .api-save-btn {
-      font-family: 'Cinzel Decorative', serif;
-      font-size: 11px;
-      color: var(--gold);
-      background: transparent;
-      border: 0.5px solid var(--gold);
-      border-radius: 8px;
-      padding: 10px 16px;
-      cursor: pointer;
-      white-space: nowrap;
-      transition: background 0.15s, color 0.15s;
-    }
+    #api-input::placeholder { color: var(--text-hint); }
+    .api-save-btn { font-family: 'Cinzel Decorative', serif; font-size: 10px; color: var(--gold); background: transparent; border: 0.5px solid var(--gold); border-radius: 8px; padding: 10px 14px; cursor: pointer; white-space: nowrap; transition: background 0.15s, color 0.15s; }
     .api-save-btn:hover { background: var(--gold); color: #0E0C0A; }
-
-    .api-status {
-      font-size: 12px;
-      margin-top: 8px;
-      font-style: italic;
-    }
+    .api-status { font-size: 12px; margin-top: 6px; font-style: italic; }
     .api-status.ok { color: var(--success); }
     .api-status.err { color: var(--danger); }
 
-    /* ===================== SETUP SCREEN ===================== */
-    .section-label {
-      font-family: 'Cinzel Decorative', serif;
-      font-size: 10px;
-      font-weight: 700;
-      color: var(--gold);
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      margin-bottom: 12px;
-    }
-
-    .char-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-bottom: 1.4rem;
-    }
-
-    .char-card {
-      border: 0.5px solid var(--border-soft);
-      border-radius: 10px;
-      padding: 14px 10px;
-      text-align: center;
-      cursor: pointer;
-      background: var(--surface);
-      transition: border-color 0.15s, background 0.15s;
-    }
-    .char-card:hover { border-color: var(--gold); }
-    .char-card.selected { border: 1.5px solid var(--gold); background: var(--surface2); }
-
-    .char-icon { font-size: 28px; margin-bottom: 6px; display: block; }
-    .char-name { font-family: 'Cinzel Decorative', serif; font-size: 10px; font-weight: 700; color: var(--text); }
-    .char-trait { font-size: 11px; color: var(--text-muted); font-style: italic; margin-top: 3px; }
-
-    .universe-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-      margin-bottom: 1.4rem;
-    }
-
-    .uni-card {
-      border: 0.5px solid var(--border-soft);
-      border-radius: 10px;
-      padding: 14px;
-      cursor: pointer;
-      background: var(--surface);
-      transition: border-color 0.15s, background 0.15s;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
+    /* SETUP */
+    .section-label { font-family: 'Cinzel Decorative', serif; font-size: 10px; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; margin-top: 1.2rem; }
+    #char-name-input, #char-background-input { width: 100%; font-family: 'Crimson Pro', serif; font-size: 15px; background: var(--surface); color: var(--text); border: 0.5px solid var(--border-soft); border-radius: 8px; padding: 12px 16px; }
+    #char-name-input:focus, #char-background-input:focus { outline: none; border-color: var(--gold); }
+    #char-name-input::placeholder, #char-background-input::placeholder { color: var(--text-hint); font-style: italic; }
+    #char-background-input { min-height: 110px; resize: vertical; line-height: 1.6; font-style: italic; }
+    .hint-box { background: var(--surface2); border: 0.5px solid var(--border); border-radius: 8px; padding: 10px 14px; margin-top: 10px; font-size: 12px; color: var(--text-muted); font-style: italic; line-height: 1.6; }
+    .hint-box strong { color: var(--gold-light); font-style: normal; }
+    .universe-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .uni-card { border: 0.5px solid var(--border-soft); border-radius: 10px; padding: 12px 14px; cursor: pointer; background: var(--surface); transition: border-color 0.15s; display: flex; align-items: center; gap: 10px; }
     .uni-card:hover { border-color: var(--gold); }
     .uni-card.selected { border: 1.5px solid var(--gold); background: var(--surface2); }
-    .uni-icon { font-size: 24px; flex-shrink: 0; }
+    .uni-icon { font-size: 22px; flex-shrink: 0; }
     .uni-name { font-family: 'Cinzel Decorative', serif; font-size: 10px; font-weight: 700; color: var(--text); }
     .uni-desc { font-size: 11px; color: var(--text-muted); font-style: italic; margin-top: 2px; }
-
-    #char-name-input {
-      width: 100%;
-      font-family: 'Crimson Pro', serif;
-      font-size: 16px;
-      background: var(--surface);
-      color: var(--text);
-      border: 0.5px solid var(--border-soft);
-      border-radius: 8px;
-      padding: 12px 16px;
-      margin-bottom: 1.4rem;
-    }
-    #char-name-input::placeholder { color: var(--text-hint); font-style: italic; }
-    #char-name-input:focus { outline: none; border-color: var(--gold); }
-
-    .start-btn {
-      width: 100%;
-      font-family: 'Cinzel Decorative', serif;
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--gold);
-      background: transparent;
-      border: 1px solid var(--gold);
-      border-radius: 10px;
-      padding: 16px;
-      cursor: pointer;
-      letter-spacing: 1px;
-      transition: background 0.15s, color 0.15s;
-    }
+    .start-btn { width: 100%; font-family: 'Cinzel Decorative', serif; font-size: 12px; font-weight: 700; color: var(--gold); background: transparent; border: 1px solid var(--gold); border-radius: 10px; padding: 15px; cursor: pointer; letter-spacing: 1px; margin-top: 1.2rem; transition: background 0.15s, color 0.15s; }
     .start-btn:hover { background: var(--gold); color: #0E0C0A; }
     .start-btn:disabled { opacity: 0.4; cursor: default; background: transparent; color: var(--gold); }
 
-    /* ===================== GAME SCREEN ===================== */
-    .hud {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 1rem;
-      padding: 10px 14px;
-      background: var(--surface);
-      border: 0.5px solid var(--border);
-      border-radius: 10px;
-    }
+    /* GENERATION */
+    #generation-screen { text-align: center; padding: 3rem 1rem; }
+    .gen-title { font-family: 'Cinzel Decorative', serif; font-size: 14px; color: var(--gold); margin-bottom: 1rem; }
+    .gen-log { font-size: 14px; color: var(--text-muted); font-style: italic; line-height: 2; }
 
-    .hud-name { font-family: 'Cinzel Decorative', serif; font-size: 12px; color: var(--gold); }
-    .hud-info { font-size: 12px; color: var(--text-muted); font-style: italic; margin-top: 2px; }
+    /* GAME */
+    .game-layout { display: grid; grid-template-columns: 190px 1fr; gap: 14px; }
+    .char-sheet { background: var(--surface); border: 0.5px solid var(--border); border-radius: 10px; padding: 12px; height: fit-content; position: sticky; top: 1rem; }
+    .sheet-name { font-family: 'Cinzel Decorative', serif; font-size: 11px; color: var(--gold); margin-bottom: 3px; }
+    .sheet-sub { font-size: 11px; color: var(--text-muted); font-style: italic; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 0.5px solid var(--border-soft); }
+    .stat-label { font-size: 10px; color: var(--text-hint); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
+    .stat-row { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
+    .stat-icon { font-size: 11px; width: 14px; text-align: center; }
+    .bar-bg { flex: 1; height: 5px; background: var(--surface2); border-radius: 3px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 3px; transition: width 0.4s; }
+    .bar-pv { background: var(--danger); }
+    .bar-pf { background: var(--warning); }
+    .bar-pm { background: #5B4FCF; }
+    .bar-chance { background: var(--gold); }
+    .stat-val { font-size: 10px; color: var(--text-muted); min-width: 36px; text-align: right; }
+    .divider { border: none; border-top: 0.5px solid var(--border-soft); margin: 8px 0; }
+    .skill-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px; }
+    .skill-name { font-size: 11px; color: var(--text-muted); font-style: italic; }
+    .skill-val { font-size: 11px; color: var(--gold-light); }
+    .talent-row { text-align: center; margin-top: 8px; }
+    .talent-label { font-size: 10px; color: var(--text-hint); text-transform: uppercase; letter-spacing: 1px; }
+    .talent-val { font-family: 'Cinzel Decorative', serif; font-size: 10px; color: var(--gold); margin-top: 2px; }
+    .etat-row { text-align: center; margin-top: 6px; font-size: 11px; color: var(--warning); font-style: italic; min-height: 14px; }
 
-    .stat-bar { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-muted); }
-    .hp-bar-bg { width: 90px; height: 6px; background: var(--surface2); border-radius: 3px; overflow: hidden; border: 0.5px solid var(--border-soft); }
-    .hp-bar-fill { height: 100%; background: var(--gold); border-radius: 3px; transition: width 0.4s; }
-
-    #story-box {
-      background: var(--surface);
-      border: 0.5px solid var(--border);
-      border-radius: 12px;
-      padding: 1.4rem 1.6rem;
-      min-height: 240px;
-      max-height: 420px;
-      overflow-y: auto;
-      font-size: 17px;
-      line-height: 1.85;
-      color: var(--text);
-      margin-bottom: 1rem;
-      scrollbar-width: thin;
-      scrollbar-color: var(--border) transparent;
-    }
-
-    .story-narrator { font-style: italic; color: var(--text); margin-bottom: 0.6rem; }
-    .story-player { color: var(--gold-light); font-style: normal; font-weight: 500; margin: 0.6rem 0; }
-
-    .action-row {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 0.8rem;
-      flex-wrap: wrap;
-    }
-
-    .quick-action {
-      font-family: 'Crimson Pro', serif;
-      font-size: 14px;
-      color: var(--text-muted);
-      background: var(--surface);
-      border: 0.5px solid var(--border-soft);
-      border-radius: 8px;
-      padding: 8px 14px;
-      cursor: pointer;
-      transition: border-color 0.15s, color 0.15s;
-      font-style: italic;
-    }
+    /* NARRATIVE */
+    .narrative-zone { display: flex; flex-direction: column; gap: 10px; }
+    #story-box { background: var(--surface); border: 0.5px solid var(--border); border-radius: 12px; padding: 1.2rem 1.4rem; min-height: 280px; max-height: 460px; overflow-y: auto; font-size: 16px; line-height: 1.85; scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
+    .story-narrator { font-style: italic; color: var(--text); margin-bottom: 0.4rem; }
+    .story-player { color: var(--gold-light); font-style: normal; font-weight: 500; margin: 0.4rem 0; }
+    .story-event { color: var(--warning); font-size: 13px; font-style: italic; margin: 0.2rem 0; }
+    .story-critical { color: #FFD700; font-size: 13px; font-style: italic; margin: 0.2rem 0; }
+    .action-row { display: flex; gap: 8px; flex-wrap: wrap; }
+    .quick-action { font-family: 'Crimson Pro', serif; font-size: 14px; color: var(--text-muted); background: var(--surface); border: 0.5px solid var(--border-soft); border-radius: 8px; padding: 8px 14px; cursor: pointer; transition: border-color 0.15s, color 0.15s; font-style: italic; }
     .quick-action:hover { border-color: var(--gold); color: var(--gold); }
-
     .input-row { display: flex; gap: 8px; }
-
-    #player-input {
-      flex: 1;
-      font-family: 'Crimson Pro', serif;
-      font-size: 15px;
-      background: var(--surface);
-      color: var(--text);
-      border: 0.5px solid var(--border-soft);
-      border-radius: 8px;
-      padding: 11px 16px;
-      font-style: italic;
-    }
+    #player-input { flex: 1; font-family: 'Crimson Pro', serif; font-size: 15px; background: var(--surface); color: var(--text); border: 0.5px solid var(--border-soft); border-radius: 8px; padding: 11px 16px; font-style: italic; }
     #player-input::placeholder { color: var(--text-hint); }
     #player-input:focus { outline: none; border-color: var(--gold); }
-
-    #send-btn {
-      font-family: 'Cinzel Decorative', serif;
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--gold);
-      background: transparent;
-      border: 0.5px solid var(--gold);
-      border-radius: 8px;
-      padding: 11px 18px;
-      cursor: pointer;
-      transition: background 0.15s, color 0.15s;
-      white-space: nowrap;
-    }
+    #send-btn { font-family: 'Cinzel Decorative', serif; font-size: 10px; color: var(--gold); background: transparent; border: 0.5px solid var(--gold); border-radius: 8px; padding: 11px 16px; cursor: pointer; transition: background 0.15s, color 0.15s; white-space: nowrap; }
     #send-btn:hover { background: var(--gold); color: #0E0C0A; }
-    #send-btn:disabled { opacity: 0.4; cursor: default; background: transparent; color: var(--gold); }
-
-    .restart-btn {
-      font-family: 'Cinzel Decorative', serif;
-      font-size: 10px;
-      color: var(--text-hint);
-      background: transparent;
-      border: 0.5px solid var(--border-soft);
-      border-radius: 6px;
-      padding: 6px 12px;
-      cursor: pointer;
-      transition: color 0.15s, border-color 0.15s;
-      margin-top: 10px;
-      display: block;
-      margin-left: auto;
-    }
-    .restart-btn:hover { color: var(--text-muted); border-color: var(--border); }
-
-    .loading-dots span {
-      display: inline-block;
-      animation: dot-pulse 1.2s infinite;
-      color: var(--gold);
-    }
+    #send-btn:disabled { opacity: 0.4; cursor: default; }
+    .restart-btn { font-family: 'Cinzel Decorative', serif; font-size: 9px; color: var(--text-hint); background: transparent; border: 0.5px solid var(--border-soft); border-radius: 6px; padding: 5px 10px; cursor: pointer; transition: color 0.15s; display: block; margin-left: auto; margin-top: 4px; }
+    .restart-btn:hover { color: var(--text-muted); }
+    .loading-dots span { display: inline-block; animation: dp 1.2s infinite; color: var(--gold); }
     .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
     .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
-
-    @keyframes dot-pulse {
-      0%, 60%, 100% { opacity: 0.2; }
-      30% { opacity: 1; }
-    }
-
+    @keyframes dp { 0%,60%,100%{opacity:0.2} 30%{opacity:1} }
     .hidden { display: none; }
-
-    @media (max-width: 480px) {
-      .char-grid { grid-template-columns: repeat(2, 1fr); }
-      .rpg-title { font-size: 18px; }
-    }
+    @media (max-width: 520px) { .game-layout { grid-template-columns: 1fr; } .char-sheet { position: static; } }
   </style>
 </head>
 <body>
-
 <div id="app">
+
   <div class="rpg-header">
     <div class="rpg-title">⚔ Chroniques de Claude ⚔</div>
-    <div class="rpg-subtitle">Un récit épique guidé par l'IA</div>
+    <div class="rpg-subtitle">Jeu de rôle immersif — Système complet généré par l'IA</div>
   </div>
 
-  <!-- CLEF API -->
   <div id="api-screen">
     <div class="api-title">Clé API Anthropic</div>
-    <p class="api-note">
-      Obtenez votre clé gratuite sur <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a>.<br>
-      Elle est sauvegardée uniquement dans votre navigateur (localStorage).
-    </p>
+    <p class="api-note">Obtenez votre clé sur <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a>. Sauvegardée uniquement dans votre navigateur.</p>
     <div class="api-row">
       <input id="api-input" type="password" placeholder="sk-ant-api03-..." />
       <button class="api-save-btn" onclick="saveApiKey()">Sauvegarder</button>
@@ -381,43 +131,17 @@
     <div class="api-status" id="api-status"></div>
   </div>
 
-  <!-- SETUP -->
   <div id="setup-screen">
-    <div class="section-label">Choisissez votre classe</div>
-    <div class="char-grid">
-      <div class="char-card selected" data-cls="Guerrier" onclick="selectClass(this)">
-        <span class="char-icon">⚔️</span>
-        <div class="char-name">Guerrier</div>
-        <div class="char-trait">Fort & courageux</div>
-      </div>
-      <div class="char-card" data-cls="Mage" onclick="selectClass(this)">
-        <span class="char-icon">🔮</span>
-        <div class="char-name">Mage</div>
-        <div class="char-trait">Savant & mystique</div>
-      </div>
-      <div class="char-card" data-cls="Rôdeur" onclick="selectClass(this)">
-        <span class="char-icon">🏹</span>
-        <div class="char-name">Rôdeur</div>
-        <div class="char-trait">Furtif & précis</div>
-      </div>
-      <div class="char-card" data-cls="Paladin" onclick="selectClass(this)">
-        <span class="char-icon">🛡️</span>
-        <div class="char-name">Paladin</div>
-        <div class="char-trait">Sacré & juste</div>
-      </div>
-      <div class="char-card" data-cls="Voleur" onclick="selectClass(this)">
-        <span class="char-icon">🗡️</span>
-        <div class="char-name">Voleur</div>
-        <div class="char-trait">Rusé & agile</div>
-      </div>
-      <div class="char-card" data-cls="Nécromancien" onclick="selectClass(this)">
-        <span class="char-icon">💀</span>
-        <div class="char-name">Nécromancien</div>
-        <div class="char-trait">Sombre & puissant</div>
-      </div>
+    <div class="section-label">Nom du personnage</div>
+    <input id="char-name-input" type="text" placeholder="Entrez le nom de votre héros..." maxlength="40" />
+
+    <div class="section-label">Background du personnage</div>
+    <textarea id="char-background-input" placeholder="Décrivez librement votre personnage : qui est-il, d'où vient-il, qu'a-t-il vécu, quelles capacités possède-t-il ?&#10;&#10;L'IA analysera votre texte et générera automatiquement ses compétences, son talent inné et ses affinités magiques."></textarea>
+    <div class="hint-box">
+      <strong>Astuce :</strong> Plus le background est original et détaillé, plus les compétences générées seront uniques. Un être mystérieux venu d'ailleurs aura un talent différent d'un soldat ordinaire.
     </div>
 
-    <div class="section-label">Choisissez votre univers</div>
+    <div class="section-label">Univers</div>
     <div class="universe-grid">
       <div class="uni-card selected" data-uni="Fantasy médiévale" onclick="selectUni(this)">
         <span class="uni-icon">🏰</span>
@@ -437,272 +161,268 @@
       </div>
     </div>
 
-    <div class="section-label">Nommez votre héros</div>
-    <input id="char-name-input" type="text" placeholder="Entrez le nom de votre personnage..." maxlength="30" />
-
-    <button class="start-btn" id="start-btn" onclick="startGame()">⚔ Commencer l'Aventure ⚔</button>
+    <button class="start-btn" id="start-btn" onclick="startGame()">⚔ Forger le Personnage & Commencer ⚔</button>
   </div>
 
-  <!-- GAME -->
+  <div id="generation-screen" class="hidden">
+    <div class="gen-title">Forge du Destin...</div>
+    <div class="gen-log" id="gen-log">Analyse du background...</div>
+  </div>
+
   <div id="game-screen" class="hidden">
-    <div class="hud">
-      <div>
-        <div class="hud-name" id="hud-name"></div>
-        <div class="hud-info" id="hud-info"></div>
+    <div class="game-layout">
+
+      <div class="char-sheet">
+        <div class="sheet-name" id="sheet-name"></div>
+        <div class="sheet-sub" id="sheet-sub"></div>
+
+        <div class="stat-label">Ressources</div>
+        <div class="stat-row">
+          <span class="stat-icon">❤</span>
+          <div class="bar-bg"><div class="bar-fill bar-pv" id="bar-pv" style="width:100%"></div></div>
+          <span class="stat-val" id="val-pv">-/-</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-icon">⚡</span>
+          <div class="bar-bg"><div class="bar-fill bar-pf" id="bar-pf" style="width:100%"></div></div>
+          <span class="stat-val" id="val-pf">-/-</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-icon">✦</span>
+          <div class="bar-bg"><div class="bar-fill bar-pm" id="bar-pm" style="width:100%"></div></div>
+          <span class="stat-val" id="val-pm">-/-</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-icon">★</span>
+          <div class="bar-bg"><div class="bar-fill bar-chance" id="bar-chance" style="width:10%"></div></div>
+          <span class="stat-val" id="val-chance">-</span>
+        </div>
+
+        <hr class="divider" />
+        <div class="stat-label">Compétences</div>
+        <div id="skills-block"></div>
+
+        <hr class="divider" />
+        <div class="talent-row">
+          <div class="talent-label">Talent inné</div>
+          <div class="talent-val" id="talent-val">—</div>
+        </div>
+        <div class="etat-row" id="etat-row"></div>
       </div>
-      <div class="stat-bar">
-        <span style="font-size:11px">HP</span>
-        <div class="hp-bar-bg"><div class="hp-bar-fill" id="hp-bar" style="width:100%"></div></div>
-        <span id="hp-val" style="font-size:11px">100</span>
+
+      <div class="narrative-zone">
+        <div id="story-box"></div>
+        <div class="action-row" id="quick-actions"></div>
+        <div class="input-row">
+          <input id="player-input" type="text" placeholder="Que faites-vous ?" />
+          <button id="send-btn" onclick="sendAction()">Agir →</button>
+        </div>
+        <button class="restart-btn" onclick="restartGame()">↩ Nouvelle partie</button>
       </div>
+
     </div>
-
-    <div id="story-box"></div>
-
-    <div class="action-row" id="quick-actions"></div>
-
-    <div class="input-row">
-      <input id="player-input" type="text" placeholder="Que faites-vous ?" />
-      <button id="send-btn" onclick="sendAction()">Agir →</button>
-    </div>
-
-    <button class="restart-btn" onclick="restartGame()">↩ Nouvelle partie</button>
   </div>
+
 </div>
-
 <script>
-  /* ====== STATE ====== */
-  let selectedClass = 'Guerrier';
-  let selectedUni   = 'Fantasy médiévale';
-  let charName      = '';
-  let hp            = 100;
-  let conversationHistory = [];
-  let isLoading     = false;
-  let apiKey        = '';
+let apiKey = '';
+let selectedUni = 'Fantasy médiévale';
+let charName = '';
+let charBackground = '';
+let isLoading = false;
+let conversationHistory = [];
+let pc = {
+  name:'', classe:'', talent:'Normal', talentMult:1.0,
+  pvMax:80, pvCur:80, pfMax:80, pfCur:80, pmMax:40, pmCur:40,
+  chance:10, competences:[], affinites:[], etat:'normal'
+};
 
-  const classEmojis = {
-    'Guerrier':'⚔️','Mage':'🔮','Rôdeur':'🏹',
-    'Paladin':'🛡️','Voleur':'🗡️','Nécromancien':'💀'
-  };
+function saveApiKey() {
+  const val = document.getElementById('api-input').value.trim();
+  const s = document.getElementById('api-status');
+  if (!val.startsWith('sk-ant-')) { s.className='api-status err'; s.textContent='Clé invalide (doit commencer par sk-ant-)'; return; }
+  apiKey = val;
+  localStorage.setItem('rpg_api_key', val);
+  s.className='api-status ok'; s.textContent='✓ Clé sauvegardée.';
+}
 
-  /* ====== API KEY ====== */
-  function saveApiKey() {
-    const val = document.getElementById('api-input').value.trim();
-    const status = document.getElementById('api-status');
-    if (!val.startsWith('sk-ant-')) {
-      status.className = 'api-status err';
-      status.textContent = 'Clé invalide. Elle doit commencer par sk-ant-';
-      return;
-    }
-    apiKey = val;
-    localStorage.setItem('rpg_api_key', val);
-    status.className = 'api-status ok';
-    status.textContent = '✓ Clé sauvegardée dans votre navigateur.';
-  }
+window.addEventListener('DOMContentLoaded', () => {
+  const saved = localStorage.getItem('rpg_api_key');
+  if (saved) { apiKey=saved; document.getElementById('api-input').value=saved; const s=document.getElementById('api-status'); s.className='api-status ok'; s.textContent='✓ Clé chargée.'; }
+  document.getElementById('player-input').addEventListener('keydown', e => { if(e.key==='Enter') sendAction(); });
+  document.getElementById('api-input').addEventListener('keydown', e => { if(e.key==='Enter') saveApiKey(); });
+});
 
-  /* Load saved key on start */
-  window.addEventListener('DOMContentLoaded', () => {
-    const saved = localStorage.getItem('rpg_api_key');
-    if (saved) {
-      apiKey = saved;
-      document.getElementById('api-input').value = saved;
-      const status = document.getElementById('api-status');
-      status.className = 'api-status ok';
-      status.textContent = '✓ Clé chargée depuis votre navigateur.';
-    }
-  });
+function selectUni(el) {
+  document.querySelectorAll('.uni-card').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedUni = el.dataset.uni;
+}
 
-  /* ====== SELECTION ====== */
-  function selectClass(el) {
-    document.querySelectorAll('.char-card').forEach(c => c.classList.remove('selected'));
-    el.classList.add('selected');
-    selectedClass = el.dataset.cls;
-  }
+async function startGame() {
+  if (!apiKey) { alert('Veuillez sauvegarder votre clé API.'); return; }
+  charName = document.getElementById('char-name-input').value.trim() || 'Héros';
+  charBackground = document.getElementById('char-background-input').value.trim();
+  if (!charBackground) { alert('Décrivez votre personnage avant de commencer.'); return; }
+  document.getElementById('setup-screen').classList.add('hidden');
+  document.getElementById('generation-screen').classList.remove('hidden');
+  const genLog = document.getElementById('gen-log');
+  try {
+    genLog.textContent = 'Analyse du background par l\'IA...';
+    const fichePrompt = `Tu es un générateur de fiche de personnage pour un JDR. Analyse ce background et génère UNIQUEMENT un objet JSON valide, sans texte avant ou après, sans balises markdown :
+{"classe":"Nom court","talent":"Normal","talentMult":1.0,"pvMax":80,"pfMax":80,"pmMax":40,"chance":10,"competences":[{"nom":"Nom","val":30},{"nom":"Nom","val":25},{"nom":"Nom","val":20},{"nom":"Nom","val":15},{"nom":"Nom","val":10}],"affinites":[]}
 
-  function selectUni(el) {
-    document.querySelectorAll('.uni-card').forEach(c => c.classList.remove('selected'));
-    el.classList.add('selected');
-    selectedUni = el.dataset.uni;
-  }
-
-  /* ====== GAME START ====== */
-  async function startGame() {
-    if (!apiKey) {
-      alert('Veuillez sauvegarder votre clé API Anthropic avant de commencer.');
-      return;
-    }
-
-    const nameInput = document.getElementById('char-name-input');
-    charName = nameInput.value.trim() || 'Héros';
-    const btn = document.getElementById('start-btn');
-    btn.disabled = true;
-    btn.textContent = 'Génération du monde...';
-
-    hp = 100;
+Règles : talentMult(Normal=1.0,Doué=1.5,Très doué=2.0,Prodige=2.5,Légende=3.0), pvMax(60-120), pfMax(50-120), pmMax(0-100, 0 si non-mage), chance(5-30), 5 compétences cohérentes avec le background (val 10-60), affinites(0-2 parmi Feu/Eau/Terre/Vent/Lumière/Ombre), personnage mystérieux/ancien=Prodige ou Légende.
+Background: "${charBackground}" | Nom: ${charName}`;
+    const ficheResp = await callRaw(fichePrompt);
+    genLog.textContent = 'Construction de la fiche...';
+    let fd;
+    try { fd = JSON.parse(ficheResp.replace(/```json|```/g,'').trim()); }
+    catch(e) { fd = {classe:'Aventurier',talent:'Normal',talentMult:1.0,pvMax:80,pfMax:80,pmMax:30,chance:10,competences:[{nom:'Combat',val:25},{nom:'Survie',val:20},{nom:'Perception',val:18},{nom:'Furtivité',val:15},{nom:'Volonté',val:12}],affinites:[]}; }
+    pc = { name:charName, classe:fd.classe||'Aventurier', talent:fd.talent||'Normal', talentMult:fd.talentMult||1.0, pvMax:fd.pvMax||80, pvCur:fd.pvMax||80, pfMax:fd.pfMax||80, pfCur:fd.pfMax||80, pmMax:fd.pmMax||30, pmCur:fd.pmMax||30, chance:fd.chance||10, competences:fd.competences||[], affinites:fd.affinites||[], etat:'normal' };
+    genLog.textContent = 'Le monde prend forme...';
+    await sleep(300);
     conversationHistory = [];
-
-    try {
-      const response = await callClaude(buildSystem(), `Je commence l'aventure. Mon personnage s'appelle ${charName}, je suis ${selectedClass} dans un univers de ${selectedUni}. Présente-moi la scène d'ouverture.`);
-
-      document.getElementById('setup-screen').classList.add('hidden');
-      document.getElementById('game-screen').classList.remove('hidden');
-      document.getElementById('hud-name').textContent = `${classEmojis[selectedClass] || '⚔️'} ${charName}`;
-      document.getElementById('hud-info').textContent  = `${selectedClass} · ${selectedUni}`;
-
-      parseAndDisplay(response, null);
-      document.getElementById('player-input').focus();
-    } catch(e) {
-      btn.disabled = false;
-      btn.textContent = '⚔ Commencer l\'Aventure ⚔';
-      alert('Erreur API : ' + e.message + '\nVérifiez votre clé API.');
-    }
-  }
-
-  function buildSystem() {
-    return `Tu es un Maître du Jeu (MJ) expert pour un jeu de rôle en texte immersif.
-Univers: ${selectedUni}.
-Le joueur incarne ${charName}, un(e) ${selectedClass}.
-Règles:
-- Raconte l'aventure de façon vivante et immersive (3-5 phrases max par réponse).
-- Propose TOUJOURS exactement 3 actions courtes possibles à la fin, sous ce format exact:
-  ACTIONS: [action1] | [action2] | [action3]
-- Adapte le ton à l'univers choisi.
-- Intègre des éléments de jeu: ennemis, trésors, PNJ, mystères.
-- Varie les situations: combat, exploration, dialogue, énigme.
-- Si le joueur est blessé, signale-le avec HP:-X (X entre 5 et 30).
-- Si le joueur trouve un soin ou trésor, signale-le avec HP:+X.
-- Si HP atteint 0, narrer la défaite de façon épique.
-- Réponds TOUJOURS en français.`;
-  }
-
-  /* ====== API CALL ====== */
-  async function callClaude(systemPrompt, userMsg) {
-    conversationHistory.push({ role: 'user', content: userMsg });
-
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true'
-      },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-5',
-        max_tokens: 1000,
-        system: systemPrompt,
-        messages: conversationHistory
-      })
-    });
-
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({}));
-      throw new Error(err.error?.message || `HTTP ${res.status}`);
-    }
-
-    const data = await res.json();
-    const text = data.content.find(b => b.type === 'text')?.text || '';
-    conversationHistory.push({ role: 'assistant', content: text });
-    return text;
-  }
-
-  /* ====== DISPLAY ====== */
-  function parseAndDisplay(text, playerAction) {
-    const actionMatch = text.match(/ACTIONS:\s*(.+)/i);
-    let narrative = text.replace(/ACTIONS:.*/is, '').trim();
-
-    const hpMatch = narrative.match(/HP:([+-]\d+)/i);
-    if (hpMatch) {
-      const delta = parseInt(hpMatch[1]);
-      hp = Math.max(0, Math.min(100, hp + delta));
-      document.getElementById('hp-val').textContent = hp;
-      document.getElementById('hp-bar').style.width = hp + '%';
-      document.getElementById('hp-bar').style.background = hp < 30 ? '#C0392B' : hp < 60 ? '#E67E22' : '#B87333';
-      narrative = narrative.replace(/HP:[+-]\d+/gi, '').trim();
-    }
-
-    if (playerAction) appendStory(`<p class="story-player">» ${escHtml(playerAction)}</p>`);
-    appendStory(`<p class="story-narrator">${escHtml(narrative)}</p>`);
-
-    const actionRow = document.getElementById('quick-actions');
-    actionRow.innerHTML = '';
-    if (actionMatch) {
-      const actions = actionMatch[1].split('|').map(a => a.trim().replace(/^\[|\]$/g, ''));
-      actions.forEach(action => {
-        if (!action) return;
-        const btn = document.createElement('button');
-        btn.className = 'quick-action';
-        btn.textContent = action;
-        btn.onclick = () => { document.getElementById('player-input').value = action; sendAction(); };
-        actionRow.appendChild(btn);
-      });
-    }
-  }
-
-  function appendStory(html) {
-    const box = document.getElementById('story-box');
-    const div = document.createElement('div');
-    div.innerHTML = html;
-    box.appendChild(div);
-    box.scrollTop = box.scrollHeight;
-  }
-
-  function escHtml(str) {
-    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  }
-
-  /* ====== SEND ACTION ====== */
-  async function sendAction() {
-    if (isLoading) return;
-    const input = document.getElementById('player-input');
-    const action = input.value.trim();
-    if (!action) return;
-
-    isLoading = true;
-    input.value = '';
-    document.getElementById('send-btn').disabled = true;
-    document.getElementById('quick-actions').innerHTML = '';
-
-    const loadingEl = document.createElement('p');
-    loadingEl.className = 'story-narrator loading-dots';
-    loadingEl.innerHTML = '<span>.</span><span>.</span><span>.</span>';
-    document.getElementById('story-box').appendChild(loadingEl);
-    document.getElementById('story-box').scrollTop = document.getElementById('story-box').scrollHeight;
-
-    try {
-      const response = await callClaude(buildSystem(), action);
-      loadingEl.remove();
-      parseAndDisplay(response, action);
-    } catch(e) {
-      loadingEl.remove();
-      appendStory(`<p class="story-narrator" style="color:#C0392B">Erreur : ${escHtml(e.message)}</p>`);
-    }
-
-    isLoading = false;
-    document.getElementById('send-btn').disabled = false;
-    input.focus();
-  }
-
-  /* ====== RESTART ====== */
-  function restartGame() {
-    document.getElementById('game-screen').classList.add('hidden');
+    const opening = await callClaude(buildSystem(), `Mon personnage s'appelle ${charName}. ${charBackground}. Je commence l'aventure dans un univers de ${selectedUni}. Présente la scène d'ouverture en tenant compte de mon background et mes compétences.`);
+    document.getElementById('generation-screen').classList.add('hidden');
+    document.getElementById('game-screen').classList.remove('hidden');
+    updateSheet();
+    parseDisplay(opening, null);
+    document.getElementById('player-input').focus();
+  } catch(e) {
+    document.getElementById('generation-screen').classList.add('hidden');
     document.getElementById('setup-screen').classList.remove('hidden');
-    document.getElementById('story-box').innerHTML = '';
     document.getElementById('start-btn').disabled = false;
-    document.getElementById('start-btn').textContent = '⚔ Commencer l\'Aventure ⚔';
-    hp = 100;
-    conversationHistory = [];
+    document.getElementById('start-btn').textContent = '⚔ Forger le Personnage & Commencer ⚔';
+    alert('Erreur : ' + e.message);
   }
+}
 
-  /* Enter key */
-  document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('player-input').addEventListener('keydown', e => {
-      if (e.key === 'Enter') sendAction();
-    });
-    document.getElementById('api-input').addEventListener('keydown', e => {
-      if (e.key === 'Enter') saveApiKey();
-    });
+function buildSystem() {
+  const comp = pc.competences.map(c=>`${c.nom} ${c.val}/100`).join(', ');
+  const aff = pc.affinites.length ? pc.affinites.join(', ') : 'aucune';
+  return `Tu es un Maître du Jeu (MJ) expert pour un JDR en texte immersif.
+Univers: ${selectedUni} | Personnage: ${pc.name} | Classe: ${pc.classe} | Talent: ${pc.talent} (×${pc.talentMult})
+PV: ${pc.pvCur}/${pc.pvMax} | PF: ${pc.pfCur}/${pc.pfMax} | PM: ${pc.pmCur}/${pc.pmMax} | Chance: ${pc.chance}
+Compétences: ${comp} | Affinités: ${aff}
+Background: ${charBackground}
+
+SYSTÈME DE JEU:
+- Actions importantes: Compétence + 1d20 (simulé narrativement). Le dé = la Chance.
+- Combat: Initiative → Attaque vs Défense (Esquive/Parade/Encaisser) → Dégâts → États.
+- États spéciaux: À terre (-30 défense), Étourdi (perd un tour), Saignement (-PV/tour), Désarmé, Épuisé.
+- Critiques: dé 20 = moment exceptionnel, dé 1 = complication dramatique.
+- Actions spéciales: Feinte, Riposte (après parade), Coup Puissant (×2 dégâts, -30 défense), Enchaînement (3 coups rapides), Charge (besoin 5m, +50% dégâts).
+- Chance (${pc.chance}/100): intervient SILENCIEUSEMENT et AUTOMATIQUEMENT. Ne jamais la mentionner explicitement.
+- Magie: sorts offensifs/défensifs/utilitaires/soutien selon affinités. Coût PM signalé.
+- Économie: pièces de cuivre (pc) / argent (pa=10pc) / or (po=10pa). Services, équipement, trésors.
+
+SIGNAUX STATS à insérer dans ta réponse quand nécessaire:
+HP:-X / HP:+X | PF:-X / PF:+X | PM:-X / PM:+X | CHANCE:+X | ETAT:nom | TRESOR:description
+
+RÈGLES NARRATION:
+- 3-5 phrases vivantes et immersives. Ton adapté à l'univers.
+- Utilise les compétences du personnage de façon cohérente.
+- Intègre combat, exploration, dialogue, énigmes, marchands, économie.
+- Si PV=0: narre la défaite de façon épique.
+- Réponds TOUJOURS en français.
+- Termine TOUJOURS par: ACTIONS: [action1] | [action2] | [action3]`;
+}
+
+async function callRaw(prompt) {
+  const r = await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:600,messages:[{role:'user',content:prompt}]})});
+  if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e.error?.message||`HTTP ${r.status}`);}
+  const d=await r.json(); return d.content.find(b=>b.type==='text')?.text||'';
+}
+
+async function callClaude(system, msg) {
+  conversationHistory.push({role:'user',content:msg});
+  const r = await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:1000,system:system,messages:conversationHistory})});
+  if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e.error?.message||`HTTP ${r.status}`);}
+  const d=await r.json(); const text=d.content.find(b=>b.type==='text')?.text||'';
+  conversationHistory.push({role:'assistant',content:text}); return text;
+}
+
+function updateSheet() {
+  document.getElementById('sheet-name').textContent = pc.name;
+  document.getElementById('sheet-sub').textContent = `${pc.classe} · ${selectedUni.split(' ')[0]}`;
+  document.getElementById('talent-val').textContent = `${pc.talent} ×${pc.talentMult}`;
+  document.getElementById('etat-row').textContent = pc.etat !== 'normal' ? `⚠ ${pc.etat}` : '';
+  setBar('bar-pv','val-pv',pc.pvCur,pc.pvMax,true);
+  setBar('bar-pf','val-pf',pc.pfCur,pc.pfMax,true);
+  setBar('bar-pm','val-pm',pc.pmCur,pc.pmMax,true);
+  document.getElementById('bar-chance').style.width = Math.min(100,pc.chance)+'%';
+  document.getElementById('val-chance').textContent = pc.chance;
+  const block = document.getElementById('skills-block');
+  block.innerHTML = '';
+  pc.competences.forEach(c => {
+    const row = document.createElement('div'); row.className='skill-row';
+    row.innerHTML=`<span class="skill-name">${esc(c.nom)}</span><span class="skill-val">${c.val}</span>`;
+    block.appendChild(row);
   });
+  if(pc.affinites.length>0){const a=document.createElement('div');a.style.cssText='margin-top:5px;font-size:11px;color:var(--text-hint);font-style:italic;';a.textContent='✦ '+pc.affinites.join(' · ');block.appendChild(a);}
+}
+
+function setBar(bid,vid,cur,max,both) {
+  const p=max>0?Math.max(0,Math.min(100,(cur/max)*100)):0;
+  document.getElementById(bid).style.width=p+'%';
+  document.getElementById(vid).textContent=both?`${cur}/${max}`:cur;
+}
+
+function parseDisplay(text, playerAction) {
+  const am = text.match(/ACTIONS:\s*(.+)/i);
+  let narr = text.replace(/ACTIONS:.*/is,'').trim();
+  narr = narr.replace(/HP:([+-]\d+)/gi,(_,d)=>{pc.pvCur=Math.max(0,Math.min(pc.pvMax,pc.pvCur+parseInt(d)));return'';});
+  narr = narr.replace(/PF:([+-]\d+)/gi,(_,d)=>{pc.pfCur=Math.max(0,Math.min(pc.pfMax,pc.pfCur+parseInt(d)));return'';});
+  narr = narr.replace(/PM:([+-]\d+)/gi,(_,d)=>{pc.pmCur=Math.max(0,Math.min(pc.pmMax,pc.pmCur+parseInt(d)));return'';});
+  narr = narr.replace(/CHANCE:\+(\d+)/gi,(_,v)=>{pc.chance=Math.min(100,pc.chance+parseInt(v));return'';});
+  narr = narr.replace(/ETAT:(\w+)/gi,(_,e)=>{pc.etat=e.toLowerCase();return'';});
+  narr = narr.replace(/TRESOR:([^.\n]+)/gi,(_,d)=>{addStory(`<p class="story-event">💰 ${esc(d.trim())}</p>`);return'';});
+  narr = narr.trim();
+  if(playerAction) addStory(`<p class="story-player">» ${esc(playerAction)}</p>`);
+  addStory(`<p class="story-narrator">${esc(narr)}</p>`);
+  updateSheet();
+  const ar=document.getElementById('quick-actions'); ar.innerHTML='';
+  if(am){am[1].split('|').map(a=>a.trim().replace(/^\[|\]$/g,'')).forEach(a=>{if(!a)return;const b=document.createElement('button');b.className='quick-action';b.textContent=a;b.onclick=()=>{document.getElementById('player-input').value=a;sendAction();};ar.appendChild(b);});}
+}
+
+function addStory(html){const b=document.getElementById('story-box');const d=document.createElement('div');d.innerHTML=html;b.appendChild(d);b.scrollTop=b.scrollHeight;}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
+
+async function sendAction() {
+  if(isLoading) return;
+  const input=document.getElementById('player-input');
+  const action=input.value.trim(); if(!action) return;
+  isLoading=true; input.value='';
+  document.getElementById('send-btn').disabled=true;
+  document.getElementById('quick-actions').innerHTML='';
+  const de20=Math.floor(Math.random()*20)+1;
+  if(de20===20) addStory(`<p class="story-critical">✦ Le destin sourit — dé de chance : 20 !</p>`);
+  else if(de20===1) addStory(`<p class="story-critical">✦ Le destin tourne le dos — dé de chance : 1...</p>`);
+  const loadEl=document.createElement('p'); loadEl.className='story-narrator loading-dots'; loadEl.innerHTML='<span>.</span><span>.</span><span>.</span>';
+  document.getElementById('story-box').appendChild(loadEl); document.getElementById('story-box').scrollTop=document.getElementById('story-box').scrollHeight;
+  let msg=action;
+  if(de20===20) msg+=` [DÉ: 20 — RÉUSSITE CRITIQUE, moment exceptionnel]`;
+  else if(de20===1) msg+=` [DÉ: 1 — ÉCHEC CRITIQUE, complication dramatique]`;
+  else msg+=` [DÉ: ${de20}]`;
+  try {
+    const resp=await callClaude(buildSystem(),msg);
+    loadEl.remove(); parseDisplay(resp,action);
+  } catch(e) { loadEl.remove(); addStory(`<p class="story-narrator" style="color:var(--danger)">Erreur: ${esc(e.message)}</p>`); }
+  isLoading=false; document.getElementById('send-btn').disabled=false; input.focus();
+}
+
+function restartGame() {
+  document.getElementById('game-screen').classList.add('hidden');
+  document.getElementById('setup-screen').classList.remove('hidden');
+  document.getElementById('story-box').innerHTML='';
+  document.getElementById('quick-actions').innerHTML='';
+  document.getElementById('start-btn').disabled=false;
+  document.getElementById('start-btn').textContent='⚔ Forger le Personnage & Commencer ⚔';
+  conversationHistory=[];
+  pc={name:'',classe:'',talent:'Normal',talentMult:1.0,pvMax:80,pvCur:80,pfMax:80,pfCur:80,pmMax:40,pmCur:40,chance:10,competences:[],affinites:[],etat:'normal'};
+}
 </script>
 </body>
 </html>
