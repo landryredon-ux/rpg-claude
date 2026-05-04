@@ -16,7 +16,7 @@
     }
     html, body { min-height: 100vh; background: var(--bg); color: var(--text); font-family: 'Crimson Pro', Georgia, serif; }
     body { display: flex; flex-direction: column; align-items: center; padding: 1.5rem 1rem 3rem; }
-    #app { width: 100%; max-width: 720px; }
+    #app { width: 100%; max-width: 860px; }
 
     /* HEADER */
     .rpg-header { text-align: center; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 0.5px solid var(--border); }
@@ -35,27 +35,40 @@
     .api-save-btn { font-family: 'Cinzel Decorative', serif; font-size: 10px; color: var(--gold); background: transparent; border: 0.5px solid var(--gold); border-radius: 8px; padding: 10px 14px; cursor: pointer; white-space: nowrap; transition: background 0.15s, color 0.15s; }
     .api-save-btn:hover { background: var(--gold); color: #0E0C0A; }
     .api-status { font-size: 12px; margin-top: 6px; font-style: italic; }
-    .api-status.ok { color: var(--success); }
-    .api-status.err { color: var(--danger); }
+    .api-status.ok { color: var(--success); } .api-status.err { color: var(--danger); }
 
     /* SETUP */
     .section-label { font-family: 'Cinzel Decorative', serif; font-size: 10px; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; margin-top: 1.2rem; }
-    #char-name-input, #char-background-input { width: 100%; font-family: 'Crimson Pro', serif; font-size: 15px; background: var(--surface); color: var(--text); border: 0.5px solid var(--border-soft); border-radius: 8px; padding: 12px 16px; }
-    #char-name-input:focus, #char-background-input:focus { outline: none; border-color: var(--gold); }
-    #char-name-input::placeholder, #char-background-input::placeholder { color: var(--text-hint); font-style: italic; }
-    #char-background-input { min-height: 110px; resize: vertical; line-height: 1.6; font-style: italic; }
+    input[type=text], textarea, select {
+      width: 100%; font-family: 'Crimson Pro', serif; font-size: 15px;
+      background: var(--surface); color: var(--text);
+      border: 0.5px solid var(--border-soft); border-radius: 8px; padding: 11px 14px;
+    }
+    input[type=text]:focus, textarea:focus, select:focus { outline: none; border-color: var(--gold); }
+    input[type=text]::placeholder, textarea::placeholder { color: var(--text-hint); font-style: italic; }
+    textarea { min-height: 100px; resize: vertical; line-height: 1.6; font-style: italic; }
+    select { appearance: none; cursor: pointer; font-style: italic; color: var(--text-muted); }
+    select option { background: var(--surface2); color: var(--text); }
+
+    .select-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .select-wrap { display: flex; flex-direction: column; gap: 6px; }
+    .select-sublabel { font-size: 12px; color: var(--text-muted); font-style: italic; }
+
     .hint-box { background: var(--surface2); border: 0.5px solid var(--border); border-radius: 8px; padding: 10px 14px; margin-top: 10px; font-size: 12px; color: var(--text-muted); font-style: italic; line-height: 1.6; }
     .hint-box strong { color: var(--gold-light); font-style: normal; }
-    .universe-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-    .uni-card { border: 0.5px solid var(--border-soft); border-radius: 10px; padding: 12px 14px; cursor: pointer; background: var(--surface); transition: border-color 0.15s; display: flex; align-items: center; gap: 10px; }
-    .uni-card:hover { border-color: var(--gold); }
-    .uni-card.selected { border: 1.5px solid var(--gold); background: var(--surface2); }
-    .uni-icon { font-size: 22px; flex-shrink: 0; }
-    .uni-name { font-family: 'Cinzel Decorative', serif; font-size: 10px; font-weight: 700; color: var(--text); }
-    .uni-desc { font-size: 11px; color: var(--text-muted); font-style: italic; margin-top: 2px; }
+
     .start-btn { width: 100%; font-family: 'Cinzel Decorative', serif; font-size: 12px; font-weight: 700; color: var(--gold); background: transparent; border: 1px solid var(--gold); border-radius: 10px; padding: 15px; cursor: pointer; letter-spacing: 1px; margin-top: 1.2rem; transition: background 0.15s, color 0.15s; }
     .start-btn:hover { background: var(--gold); color: #0E0C0A; }
     .start-btn:disabled { opacity: 0.4; cursor: default; background: transparent; color: var(--gold); }
+
+    .resume-bar { display: flex; align-items: center; justify-content: space-between; background: var(--surface); border: 0.5px solid var(--gold); border-radius: 10px; padding: 12px 16px; margin-top: 1rem; }
+    .resume-info { font-size: 13px; color: var(--text-muted); font-style: italic; }
+    .resume-info strong { color: var(--gold-light); font-style: normal; }
+    .resume-btns { display: flex; gap: 8px; }
+    .resume-btn { font-family: 'Cinzel Decorative', serif; font-size: 10px; padding: 7px 12px; border-radius: 6px; cursor: pointer; border: 0.5px solid var(--gold); color: var(--gold); background: transparent; transition: background 0.15s, color 0.15s; }
+    .resume-btn:hover { background: var(--gold); color: #0E0C0A; }
+    .resume-btn.secondary { border-color: var(--border-soft); color: var(--text-hint); }
+    .resume-btn.secondary:hover { border-color: var(--danger); color: var(--danger); background: transparent; }
 
     /* GENERATION */
     #generation-screen { text-align: center; padding: 3rem 1rem; }
@@ -63,54 +76,82 @@
     .gen-log { font-size: 14px; color: var(--text-muted); font-style: italic; line-height: 2; }
 
     /* GAME */
-    .game-layout { display: grid; grid-template-columns: 190px 1fr; gap: 14px; }
+    .game-layout { display: grid; grid-template-columns: 210px 1fr; gap: 14px; }
+
+    /* CHAR SHEET */
     .char-sheet { background: var(--surface); border: 0.5px solid var(--border); border-radius: 10px; padding: 12px; height: fit-content; position: sticky; top: 1rem; }
-    .sheet-name { font-family: 'Cinzel Decorative', serif; font-size: 11px; color: var(--gold); margin-bottom: 3px; }
+    .sheet-name { font-family: 'Cinzel Decorative', serif; font-size: 11px; color: var(--gold); margin-bottom: 3px; word-break: break-word; }
     .sheet-sub { font-size: 11px; color: var(--text-muted); font-style: italic; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 0.5px solid var(--border-soft); }
     .stat-label { font-size: 10px; color: var(--text-hint); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
     .stat-row { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
     .stat-icon { font-size: 11px; width: 14px; text-align: center; }
     .bar-bg { flex: 1; height: 5px; background: var(--surface2); border-radius: 3px; overflow: hidden; }
     .bar-fill { height: 100%; border-radius: 3px; transition: width 0.4s; }
-    .bar-pv { background: var(--danger); }
-    .bar-pf { background: var(--warning); }
-    .bar-pm { background: #5B4FCF; }
-    .bar-chance { background: var(--gold); }
+    .bar-pv { background: var(--danger); } .bar-pf { background: var(--warning); }
+    .bar-pm { background: #5B4FCF; } .bar-chance { background: var(--gold); }
     .stat-val { font-size: 10px; color: var(--text-muted); min-width: 36px; text-align: right; }
     .divider { border: none; border-top: 0.5px solid var(--border-soft); margin: 8px 0; }
     .skill-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px; }
     .skill-name { font-size: 11px; color: var(--text-muted); font-style: italic; }
     .skill-val { font-size: 11px; color: var(--gold-light); }
-    .talent-row { text-align: center; margin-top: 8px; }
+    .talent-row { text-align: center; margin-top: 6px; }
     .talent-label { font-size: 10px; color: var(--text-hint); text-transform: uppercase; letter-spacing: 1px; }
     .talent-val { font-family: 'Cinzel Decorative', serif; font-size: 10px; color: var(--gold); margin-top: 2px; }
-    .etat-row { text-align: center; margin-top: 6px; font-size: 11px; color: var(--warning); font-style: italic; min-height: 14px; }
+    .etat-row { text-align: center; margin-top: 4px; font-size: 11px; color: var(--warning); font-style: italic; min-height: 14px; }
+
+    .sheet-btn { width: 100%; font-family: 'Cinzel Decorative', serif; font-size: 9px; color: var(--text-muted); background: transparent; border: 0.5px solid var(--border-soft); border-radius: 6px; padding: 7px; cursor: pointer; margin-top: 8px; transition: color 0.15s, border-color 0.15s; letter-spacing: 1px; }
+    .sheet-btn:hover { color: var(--gold); border-color: var(--gold); }
+
+    /* STATS PANEL */
+    .stats-panel { display: none; background: var(--surface2); border: 0.5px solid var(--border); border-radius: 8px; padding: 12px; margin-top: 8px; font-size: 12px; }
+    .stats-panel.open { display: block; }
+    .panel-section { margin-bottom: 10px; }
+    .panel-title { font-family: 'Cinzel Decorative', serif; font-size: 10px; color: var(--gold); letter-spacing: 1px; margin-bottom: 6px; }
+    .inv-item { display: flex; justify-content: space-between; padding: 3px 0; border-bottom: 0.5px solid var(--border-soft); font-size: 11px; color: var(--text-muted); }
+    .inv-item:last-child { border-bottom: none; }
+    .inv-qty { color: var(--gold-light); }
+    .empty-inv { font-size: 11px; color: var(--text-hint); font-style: italic; }
+    .gold-total { font-size: 12px; color: var(--gold-light); margin-top: 4px; }
 
     /* NARRATIVE */
     .narrative-zone { display: flex; flex-direction: column; gap: 10px; }
-    #story-box { background: var(--surface); border: 0.5px solid var(--border); border-radius: 12px; padding: 1.2rem 1.4rem; min-height: 280px; max-height: 460px; overflow-y: auto; font-size: 16px; line-height: 1.85; scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
-    .story-narrator { font-style: italic; color: var(--text); margin-bottom: 0.4rem; }
-    .story-player { color: var(--gold-light); font-style: normal; font-weight: 500; margin: 0.4rem 0; }
-    .story-event { color: var(--warning); font-size: 13px; font-style: italic; margin: 0.2rem 0; }
-    .story-critical { color: #FFD700; font-size: 13px; font-style: italic; margin: 0.2rem 0; }
+    #story-box {
+      background: var(--surface); border: 0.5px solid var(--border); border-radius: 12px;
+      padding: 1.4rem 1.6rem; min-height: 420px; max-height: 600px;
+      overflow-y: auto; font-size: 16px; line-height: 1.9;
+      scrollbar-width: thin; scrollbar-color: var(--border) transparent;
+    }
+    .story-narrator { font-style: italic; color: var(--text); margin-bottom: 0.5rem; }
+    .story-player { color: var(--gold-light); font-style: normal; font-weight: 500; margin: 0.5rem 0; }
+    .story-event { color: var(--warning); font-size: 13px; font-style: italic; margin: 0.3rem 0; }
+    .story-critical { color: #FFD700; font-size: 13px; font-style: italic; margin: 0.3rem 0; }
     .action-row { display: flex; gap: 8px; flex-wrap: wrap; }
     .quick-action { font-family: 'Crimson Pro', serif; font-size: 14px; color: var(--text-muted); background: var(--surface); border: 0.5px solid var(--border-soft); border-radius: 8px; padding: 8px 14px; cursor: pointer; transition: border-color 0.15s, color 0.15s; font-style: italic; }
     .quick-action:hover { border-color: var(--gold); color: var(--gold); }
     .input-row { display: flex; gap: 8px; }
-    #player-input { flex: 1; font-family: 'Crimson Pro', serif; font-size: 15px; background: var(--surface); color: var(--text); border: 0.5px solid var(--border-soft); border-radius: 8px; padding: 11px 16px; font-style: italic; }
+    #player-input { flex: 1; font-family: 'Crimson Pro', serif; font-size: 15px; background: var(--surface); color: var(--text); border: 0.5px solid var(--border-soft); border-radius: 8px; padding: 12px 16px; font-style: italic; }
     #player-input::placeholder { color: var(--text-hint); }
     #player-input:focus { outline: none; border-color: var(--gold); }
-    #send-btn { font-family: 'Cinzel Decorative', serif; font-size: 10px; color: var(--gold); background: transparent; border: 0.5px solid var(--gold); border-radius: 8px; padding: 11px 16px; cursor: pointer; transition: background 0.15s, color 0.15s; white-space: nowrap; }
+    #send-btn { font-family: 'Cinzel Decorative', serif; font-size: 10px; color: var(--gold); background: transparent; border: 0.5px solid var(--gold); border-radius: 8px; padding: 12px 16px; cursor: pointer; transition: background 0.15s, color 0.15s; white-space: nowrap; }
     #send-btn:hover { background: var(--gold); color: #0E0C0A; }
     #send-btn:disabled { opacity: 0.4; cursor: default; }
-    .restart-btn { font-family: 'Cinzel Decorative', serif; font-size: 9px; color: var(--text-hint); background: transparent; border: 0.5px solid var(--border-soft); border-radius: 6px; padding: 5px 10px; cursor: pointer; transition: color 0.15s; display: block; margin-left: auto; margin-top: 4px; }
-    .restart-btn:hover { color: var(--text-muted); }
+    .bottom-row { display: flex; justify-content: space-between; align-items: center; }
+    .save-indicator { font-size: 11px; color: var(--text-hint); font-style: italic; }
+    .save-indicator.saved { color: var(--success); }
+    .restart-btn { font-family: 'Cinzel Decorative', serif; font-size: 9px; color: var(--text-hint); background: transparent; border: 0.5px solid var(--border-soft); border-radius: 6px; padding: 5px 10px; cursor: pointer; transition: color 0.15s; }
+    .restart-btn:hover { color: var(--danger); border-color: var(--danger); }
+
     .loading-dots span { display: inline-block; animation: dp 1.2s infinite; color: var(--gold); }
     .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
     .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
     @keyframes dp { 0%,60%,100%{opacity:0.2} 30%{opacity:1} }
     .hidden { display: none; }
-    @media (max-width: 520px) { .game-layout { grid-template-columns: 1fr; } .char-sheet { position: static; } }
+
+    @media (max-width: 600px) {
+      .game-layout { grid-template-columns: 1fr; }
+      .char-sheet { position: static; }
+      .select-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -121,6 +162,7 @@
     <div class="rpg-subtitle">Jeu de rôle immersif — Système complet généré par l'IA</div>
   </div>
 
+  <!-- API -->
   <div id="api-screen">
     <div class="api-title">Clé API Anthropic</div>
     <p class="api-note">Obtenez votre clé sur <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a>. Sauvegardée uniquement dans votre navigateur.</p>
@@ -131,7 +173,18 @@
     <div class="api-status" id="api-status"></div>
   </div>
 
+  <!-- SETUP -->
   <div id="setup-screen">
+
+    <!-- Reprise de partie -->
+    <div id="resume-bar" class="resume-bar hidden">
+      <div class="resume-info">Partie sauvegardée : <strong id="resume-name"></strong></div>
+      <div class="resume-btns">
+        <button class="resume-btn" onclick="resumeGame()">↩ Reprendre</button>
+        <button class="resume-btn secondary" onclick="clearSave()">✕ Effacer</button>
+      </div>
+    </div>
+
     <div class="section-label">Nom du personnage</div>
     <input id="char-name-input" type="text" placeholder="Entrez le nom de votre héros..." maxlength="40" />
 
@@ -141,37 +194,79 @@
       <strong>Astuce :</strong> Plus le background est original et détaillé, plus les compétences générées seront uniques. Un être mystérieux venu d'ailleurs aura un talent différent d'un soldat ordinaire.
     </div>
 
-    <div class="section-label">Univers</div>
-    <div class="universe-grid">
-      <div class="uni-card selected" data-uni="Fantasy médiévale" onclick="selectUni(this)">
-        <span class="uni-icon">🏰</span>
-        <div><div class="uni-name">Fantasy médiévale</div><div class="uni-desc">Royaumes, dragons & magie</div></div>
+    <div class="section-label">Construire votre univers</div>
+    <div class="select-grid">
+      <div class="select-wrap">
+        <span class="select-sublabel">Époque & Technologie</span>
+        <select id="uni-epoque">
+          <option value="Médiéval">Médiéval</option>
+          <option value="Âge des cavernes">Âge des cavernes</option>
+          <option value="Renaissance">Renaissance</option>
+          <option value="Industriel / Steampunk">Industriel / Steampunk</option>
+          <option value="Moderne contemporain">Moderne contemporain</option>
+          <option value="Futuriste / Sci-fi">Futuriste / Sci-fi</option>
+          <option value="Post-apocalyptique">Post-apocalyptique</option>
+          <option value="Hors du temps">Hors du temps</option>
+        </select>
       </div>
-      <div class="uni-card" data-uni="Science-fiction" onclick="selectUni(this)">
-        <span class="uni-icon">🚀</span>
-        <div><div class="uni-name">Science-fiction</div><div class="uni-desc">Espace, cyberpunk & IA</div></div>
+      <div class="select-wrap">
+        <span class="select-sublabel">État du monde</span>
+        <select id="uni-etat">
+          <option value="En paix relative">En paix relative</option>
+          <option value="En guerre ouverte">En guerre ouverte</option>
+          <option value="Après une grande catastrophe">Après une grande catastrophe</option>
+          <option value="Sous occupation ennemie">Sous occupation ennemie</option>
+          <option value="En déclin et effondrement">En déclin et effondrement</option>
+          <option value="En reconstruction">En reconstruction</option>
+          <option value="Âge d'or et prospérité">Âge d'or et prospérité</option>
+          <option value="Chaos total">Chaos total</option>
+        </select>
       </div>
-      <div class="uni-card" data-uni="Horreur gothique" onclick="selectUni(this)">
-        <span class="uni-icon">🦇</span>
-        <div><div class="uni-name">Horreur gothique</div><div class="uni-desc">Vampires, mystère & terreur</div></div>
+      <div class="select-wrap">
+        <span class="select-sublabel">Présence de la magie</span>
+        <select id="uni-magie">
+          <option value="Magie rare et secrète">Magie rare et secrète</option>
+          <option value="Aucune magie">Aucune magie</option>
+          <option value="Magie commune et acceptée">Magie commune et acceptée</option>
+          <option value="Magie omniprésente">Magie omniprésente</option>
+          <option value="Magie interdite et pourchassée">Magie interdite et pourchassée</option>
+          <option value="Magie mourante et oubliée">Magie mourante et oubliée</option>
+          <option value="Technologie magique fusionnée">Technologie magique fusionnée</option>
+        </select>
       </div>
-      <div class="uni-card" data-uni="Japon féodal" onclick="selectUni(this)">
-        <span class="uni-icon">⛩️</span>
-        <div><div class="uni-name">Japon féodal</div><div class="uni-desc">Samouraïs, oni & honneur</div></div>
+      <div class="select-wrap">
+        <span class="select-sublabel">Ambiance générale</span>
+        <select id="uni-ambiance">
+          <option value="Héroïque et épique">Héroïque et épique</option>
+          <option value="Sombre et réaliste">Sombre et réaliste</option>
+          <option value="Mystérieux et énigmatique">Mystérieux et énigmatique</option>
+          <option value="Horreur et survival">Horreur et survival</option>
+          <option value="Politique et intrigue">Politique et intrigue</option>
+          <option value="Aventure et exploration">Aventure et exploration</option>
+          <option value="Comédie et légèreté">Comédie et légèreté</option>
+          <option value="Tragique et mélancolique">Tragique et mélancolique</option>
+        </select>
       </div>
+    </div>
+
+    <div style="margin-top: 10px;">
+      <textarea id="uni-details" style="min-height:70px;" placeholder="Détails supplémentaires (optionnel) : factions importantes, lieux clés, lore spécifique, règles particulières du monde..."></textarea>
     </div>
 
     <button class="start-btn" id="start-btn" onclick="startGame()">⚔ Forger le Personnage & Commencer ⚔</button>
   </div>
 
+  <!-- GENERATION -->
   <div id="generation-screen" class="hidden">
     <div class="gen-title">Forge du Destin...</div>
     <div class="gen-log" id="gen-log">Analyse du background...</div>
   </div>
 
+  <!-- GAME -->
   <div id="game-screen" class="hidden">
     <div class="game-layout">
 
+      <!-- FICHE -->
       <div class="char-sheet">
         <div class="sheet-name" id="sheet-name"></div>
         <div class="sheet-sub" id="sheet-sub"></div>
@@ -208,8 +303,28 @@
           <div class="talent-val" id="talent-val">—</div>
         </div>
         <div class="etat-row" id="etat-row"></div>
+
+        <button class="sheet-btn" onclick="togglePanel()">▼ Stats & Inventaire</button>
+
+        <!-- PANNEAU STATS/INVENTAIRE -->
+        <div class="stats-panel" id="stats-panel">
+          <div class="panel-section">
+            <div class="panel-title">Inventaire</div>
+            <div id="inv-list"><span class="empty-inv">Aucun objet pour l'instant.</span></div>
+            <div class="gold-total" id="gold-total"></div>
+          </div>
+          <div class="panel-section">
+            <div class="panel-title">Affinités magiques</div>
+            <div id="aff-list" style="font-size:12px;color:var(--text-muted);font-style:italic;"></div>
+          </div>
+          <div class="panel-section">
+            <div class="panel-title">Univers</div>
+            <div id="uni-summary" style="font-size:11px;color:var(--text-hint);font-style:italic;line-height:1.6;"></div>
+          </div>
+        </div>
       </div>
 
+      <!-- NARRATIVE -->
       <div class="narrative-zone">
         <div id="story-box"></div>
         <div class="action-row" id="quick-actions"></div>
@@ -217,7 +332,10 @@
           <input id="player-input" type="text" placeholder="Que faites-vous ?" />
           <button id="send-btn" onclick="sendAction()">Agir →</button>
         </div>
-        <button class="restart-btn" onclick="restartGame()">↩ Nouvelle partie</button>
+        <div class="bottom-row">
+          <span class="save-indicator" id="save-indicator">○ Non sauvegardé</span>
+          <button class="restart-btn" onclick="confirmRestart()">✕ Nouvelle partie</button>
+        </div>
       </div>
 
     </div>
@@ -225,142 +343,232 @@
 
 </div>
 <script>
+/* ============ STATE ============ */
 let apiKey = '';
-let selectedUni = 'Fantasy médiévale';
-let charName = '';
-let charBackground = '';
 let isLoading = false;
 let conversationHistory = [];
-let pc = {
-  name:'', classe:'', talent:'Normal', talentMult:1.0,
-  pvMax:80, pvCur:80, pfMax:80, pfCur:80, pmMax:40, pmCur:40,
-  chance:10, competences:[], affinites:[], etat:'normal'
-};
+let univers = '';
+let pc = { name:'', classe:'', talent:'Normal', talentMult:1.0, pvMax:80, pvCur:80, pfMax:80, pfCur:80, pmMax:40, pmCur:40, chance:10, competences:[], affinites:[], etat:'normal', inventaire:[], or:0, argent:0, cuivre:0 };
+let charBackground = '';
+let panelOpen = false;
 
+/* ============ API KEY ============ */
 function saveApiKey() {
   const val = document.getElementById('api-input').value.trim();
   const s = document.getElementById('api-status');
   if (!val.startsWith('sk-ant-')) { s.className='api-status err'; s.textContent='Clé invalide (doit commencer par sk-ant-)'; return; }
-  apiKey = val;
-  localStorage.setItem('rpg_api_key', val);
+  apiKey = val; localStorage.setItem('rpg_api_key', val);
   s.className='api-status ok'; s.textContent='✓ Clé sauvegardée.';
 }
 
+/* ============ INIT ============ */
 window.addEventListener('DOMContentLoaded', () => {
   const saved = localStorage.getItem('rpg_api_key');
   if (saved) { apiKey=saved; document.getElementById('api-input').value=saved; const s=document.getElementById('api-status'); s.className='api-status ok'; s.textContent='✓ Clé chargée.'; }
   document.getElementById('player-input').addEventListener('keydown', e => { if(e.key==='Enter') sendAction(); });
   document.getElementById('api-input').addEventListener('keydown', e => { if(e.key==='Enter') saveApiKey(); });
+  checkSavedGame();
 });
 
-function selectUni(el) {
-  document.querySelectorAll('.uni-card').forEach(c=>c.classList.remove('selected'));
-  el.classList.add('selected');
-  selectedUni = el.dataset.uni;
+/* ============ SAVE SYSTEM ============ */
+function saveGame() {
+  const state = { pc, charBackground, univers, conversationHistory, storyHTML: document.getElementById('story-box').innerHTML, savedAt: Date.now() };
+  localStorage.setItem('rpg_save', JSON.stringify(state));
+  const si = document.getElementById('save-indicator');
+  si.className='save-indicator saved'; si.textContent='✓ Sauvegardé';
+  setTimeout(()=>{ si.className='save-indicator'; si.textContent='○ Sauvegardé'; }, 2000);
 }
 
+function checkSavedGame() {
+  const raw = localStorage.getItem('rpg_save');
+  if (!raw) return;
+  try {
+    const state = JSON.parse(raw);
+    if (!state.pc?.name) return;
+    document.getElementById('resume-name').textContent = state.pc.name;
+    document.getElementById('resume-bar').classList.remove('hidden');
+  } catch(e) {}
+}
+
+function resumeGame() {
+  const raw = localStorage.getItem('rpg_save');
+  if (!raw) return;
+  try {
+    const state = JSON.parse(raw);
+    pc = state.pc;
+    charBackground = state.charBackground || '';
+    univers = state.univers || '';
+    conversationHistory = state.conversationHistory || [];
+    document.getElementById('setup-screen').classList.add('hidden');
+    document.getElementById('game-screen').classList.remove('hidden');
+    document.getElementById('story-box').innerHTML = state.storyHTML || '';
+    document.getElementById('story-box').scrollTop = document.getElementById('story-box').scrollHeight;
+    updateSheet();
+    updateInvPanel();
+    document.getElementById('save-indicator').textContent = '○ Sauvegardé';
+    document.getElementById('player-input').focus();
+  } catch(e) { alert('Impossible de reprendre la partie.'); }
+}
+
+function clearSave() {
+  if (!confirm('Effacer la partie sauvegardée ?')) return;
+  localStorage.removeItem('rpg_save');
+  document.getElementById('resume-bar').classList.add('hidden');
+}
+
+function confirmRestart() {
+  if (!confirm('Commencer une nouvelle partie ? La partie actuelle sera perdue.')) return;
+  localStorage.removeItem('rpg_save');
+  restartGame();
+}
+
+/* ============ UNIVERS ============ */
+function buildUnivers() {
+  const epoque = document.getElementById('uni-epoque').value;
+  const etat = document.getElementById('uni-etat').value;
+  const magie = document.getElementById('uni-magie').value;
+  const ambiance = document.getElementById('uni-ambiance').value;
+  const details = document.getElementById('uni-details').value.trim();
+  let u = `${epoque}, ${etat}, ${magie}, ambiance ${ambiance}`;
+  if (details) u += `. ${details}`;
+  return u;
+}
+
+/* ============ START GAME ============ */
 async function startGame() {
-  if (!apiKey) { alert('Veuillez sauvegarder votre clé API.'); return; }
-  charName = document.getElementById('char-name-input').value.trim() || 'Héros';
-  charBackground = document.getElementById('char-background-input').value.trim();
-  if (!charBackground) { alert('Décrivez votre personnage avant de commencer.'); return; }
+  if (!apiKey) { const s=document.getElementById('api-status'); s.className='api-status err'; s.textContent='⚠ Veuillez sauvegarder votre clé API avant de commencer.'; document.getElementById('api-input').focus(); return; }
+  const name = document.getElementById('char-name-input').value.trim();
+  const bg = document.getElementById('char-background-input').value.trim();
+  if (!name) { document.getElementById('char-name-input').style.borderColor='var(--danger)'; document.getElementById('char-name-input').focus(); return; }
+  if (!bg) { document.getElementById('char-background-input').style.borderColor='var(--danger)'; document.getElementById('char-background-input').focus(); return; }
+
+  pc.name = name; charBackground = bg; univers = buildUnivers();
   document.getElementById('setup-screen').classList.add('hidden');
   document.getElementById('generation-screen').classList.remove('hidden');
   const genLog = document.getElementById('gen-log');
+
   try {
     genLog.textContent = 'Analyse du background par l\'IA...';
     const fichePrompt = `Tu es un générateur de fiche de personnage pour un JDR. Analyse ce background et génère UNIQUEMENT un objet JSON valide, sans texte avant ou après, sans balises markdown :
 {"classe":"Nom court","talent":"Normal","talentMult":1.0,"pvMax":80,"pfMax":80,"pmMax":40,"chance":10,"competences":[{"nom":"Nom","val":30},{"nom":"Nom","val":25},{"nom":"Nom","val":20},{"nom":"Nom","val":15},{"nom":"Nom","val":10}],"affinites":[]}
+Règles : talentMult(Normal=1.0,Doué=1.5,Très doué=2.0,Prodige=2.5,Légende=3.0), pvMax(60-120), pfMax(50-120), pmMax(0-100, 0 si non-mage), chance(5-30), 5 compétences cohérentes (val 10-60), affinites(0-2 parmi Feu/Eau/Terre/Vent/Lumière/Ombre), personnage mystérieux/ancien=Prodige ou Légende.
+Background: "${bg}" | Nom: ${name} | Univers: ${univers}`;
 
-Règles : talentMult(Normal=1.0,Doué=1.5,Très doué=2.0,Prodige=2.5,Légende=3.0), pvMax(60-120), pfMax(50-120), pmMax(0-100, 0 si non-mage), chance(5-30), 5 compétences cohérentes avec le background (val 10-60), affinites(0-2 parmi Feu/Eau/Terre/Vent/Lumière/Ombre), personnage mystérieux/ancien=Prodige ou Légende.
-Background: "${charBackground}" | Nom: ${charName}`;
     const ficheResp = await callRaw(fichePrompt);
     genLog.textContent = 'Construction de la fiche...';
     let fd;
     try { fd = JSON.parse(ficheResp.replace(/```json|```/g,'').trim()); }
     catch(e) { fd = {classe:'Aventurier',talent:'Normal',talentMult:1.0,pvMax:80,pfMax:80,pmMax:30,chance:10,competences:[{nom:'Combat',val:25},{nom:'Survie',val:20},{nom:'Perception',val:18},{nom:'Furtivité',val:15},{nom:'Volonté',val:12}],affinites:[]}; }
-    pc = { name:charName, classe:fd.classe||'Aventurier', talent:fd.talent||'Normal', talentMult:fd.talentMult||1.0, pvMax:fd.pvMax||80, pvCur:fd.pvMax||80, pfMax:fd.pfMax||80, pfCur:fd.pfMax||80, pmMax:fd.pmMax||30, pmCur:fd.pmMax||30, chance:fd.chance||10, competences:fd.competences||[], affinites:fd.affinites||[], etat:'normal' };
+
+    pc = { name, classe:fd.classe||'Aventurier', talent:fd.talent||'Normal', talentMult:fd.talentMult||1.0, pvMax:fd.pvMax||80, pvCur:fd.pvMax||80, pfMax:fd.pfMax||80, pfCur:fd.pfMax||80, pmMax:fd.pmMax||30, pmCur:fd.pmMax||30, chance:fd.chance||10, competences:fd.competences||[], affinites:fd.affinites||[], etat:'normal', inventaire:[], or:0, argent:0, cuivre:0 };
+
     genLog.textContent = 'Le monde prend forme...';
     await sleep(300);
     conversationHistory = [];
-    const opening = await callClaude(buildSystem(), `Mon personnage s'appelle ${charName}. ${charBackground}. Je commence l'aventure dans un univers de ${selectedUni}. Présente la scène d'ouverture en tenant compte de mon background et mes compétences.`);
+    const opening = await callClaude(buildSystem(), `Mon personnage s'appelle ${name}. ${bg}. Présente la scène d'ouverture en tenant compte de mon background, mes compétences et l'univers.`);
+
     document.getElementById('generation-screen').classList.add('hidden');
     document.getElementById('game-screen').classList.remove('hidden');
-    updateSheet();
+    updateSheet(); updateInvPanel();
     parseDisplay(opening, null);
+    saveGame();
     document.getElementById('player-input').focus();
   } catch(e) {
     document.getElementById('generation-screen').classList.add('hidden');
     document.getElementById('setup-screen').classList.remove('hidden');
     document.getElementById('start-btn').disabled = false;
     document.getElementById('start-btn').textContent = '⚔ Forger le Personnage & Commencer ⚔';
-    alert('Erreur : ' + e.message);
+    const genMsg = document.getElementById('gen-log');
+    genMsg.style.color='var(--danger)';
+    genMsg.textContent = e.message.toLowerCase().includes('overload') ? '⏳ Serveurs surchargés. Réessayez dans quelques instants.' : '⚠ Erreur : ' + e.message;
   }
 }
 
+/* ============ SYSTEM PROMPT ============ */
 function buildSystem() {
   const comp = pc.competences.map(c=>`${c.nom} ${c.val}/100`).join(', ');
   const aff = pc.affinites.length ? pc.affinites.join(', ') : 'aucune';
+  const inv = pc.inventaire.length ? pc.inventaire.map(i=>`${i.nom}${i.qte>1?' x'+i.qte:''}`).join(', ') : 'vide';
+  const money = `${pc.or}po ${pc.argent}pa ${pc.cuivre}pc`;
   return `Tu es un Maître du Jeu (MJ) expert pour un JDR en texte immersif.
-Univers: ${selectedUni} | Personnage: ${pc.name} | Classe: ${pc.classe} | Talent: ${pc.talent} (×${pc.talentMult})
+UNIVERS: ${univers}
+PERSONNAGE: ${pc.name} | Classe: ${pc.classe} | Talent: ${pc.talent} (×${pc.talentMult})
 PV: ${pc.pvCur}/${pc.pvMax} | PF: ${pc.pfCur}/${pc.pfMax} | PM: ${pc.pmCur}/${pc.pmMax} | Chance: ${pc.chance}
-Compétences: ${comp} | Affinités: ${aff}
+Compétences: ${comp} | Affinités: ${aff} | État: ${pc.etat}
+Inventaire: ${inv} | Bourse: ${money}
 Background: ${charBackground}
 
 SYSTÈME DE JEU:
-- Actions importantes: Compétence + 1d20 (simulé narrativement). Le dé = la Chance.
+- Actions: Compétence + 1d20 (simulé narrativement). Le dé = la Chance.
 - Combat: Initiative → Attaque vs Défense (Esquive/Parade/Encaisser) → Dégâts → États.
-- États spéciaux: À terre (-30 défense), Étourdi (perd un tour), Saignement (-PV/tour), Désarmé, Épuisé.
+- États: À terre (-30 défense), Étourdi (perd un tour), Saignement (-PV/tour), Désarmé, Épuisé.
 - Critiques: dé 20 = moment exceptionnel, dé 1 = complication dramatique.
-- Actions spéciales: Feinte, Riposte (après parade), Coup Puissant (×2 dégâts, -30 défense), Enchaînement (3 coups rapides), Charge (besoin 5m, +50% dégâts).
-- Chance (${pc.chance}/100): intervient SILENCIEUSEMENT et AUTOMATIQUEMENT. Ne jamais la mentionner explicitement.
-- Magie: sorts offensifs/défensifs/utilitaires/soutien selon affinités. Coût PM signalé.
-- Économie: pièces de cuivre (pc) / argent (pa=10pc) / or (po=10pa). Services, équipement, trésors.
+- Actions spéciales: Feinte, Riposte, Coup Puissant (×2 dmg -30 def), Enchaînement (3 coups), Charge (+50% dmg besoin 5m).
+- Chance (${pc.chance}/100): intervient SILENCIEUSEMENT. Ne jamais la mentionner.
+- Magie: sorts offensifs/défensifs/utilitaires/soutien selon affinités.
+- Économie: po (or) / pa (argent, 1po=10pa) / pc (cuivre, 1pa=10pc).
+- Gère l'inventaire: quand le personnage trouve ou achète un objet, signale-le.
 
-SIGNAUX STATS à insérer dans ta réponse quand nécessaire:
-HP:-X / HP:+X | PF:-X / PF:+X | PM:-X / PM:+X | CHANCE:+X | ETAT:nom | TRESOR:description
+SIGNAUX STATS (insère dans ta réponse):
+HP:-X / HP:+X | PF:-X / PF:+X | PM:-X / PM:+X | CHANCE:+X
+ETAT:nom (etourdi/saignement/aterr/desarme/epuise/normal)
+ITEM:nom_objet (objet gagné ou acheté)
+ITEM_DEL:nom_objet (objet utilisé ou perdu)
+MONEY:+Xpo / MONEY:-Xpo / MONEY:+Xpa / MONEY:-Xpa / MONEY:+Xpc / MONEY:-Xpc
 
-RÈGLES NARRATION:
-- 3-5 phrases vivantes et immersives. Ton adapté à l'univers.
-- Utilise les compétences du personnage de façon cohérente.
-- Intègre combat, exploration, dialogue, énigmes, marchands, économie.
-- Si PV=0: narre la défaite de façon épique.
-- Réponds TOUJOURS en français.
-- Termine TOUJOURS par: ACTIONS: [action1] | [action2] | [action3]`;
+NARRATION: 3-5 phrases immersives. Ton adapté à l'univers. Utilise les compétences du perso. Si PV=0: défaite épique. Réponds en français.
+Termine TOUJOURS par: ACTIONS: [action1] | [action2] | [action3]`;
 }
 
+/* ============ API WITH RETRY ============ */
+async function fetchWithRetry(body, maxRetries=3) {
+  for(let attempt=1; attempt<=maxRetries; attempt++) {
+    const r = await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify(body)});
+    if(r.ok) return r;
+    const e = await r.json().catch(()=>({}));
+    const msg = e.error?.message||`HTTP ${r.status}`;
+    const isOverload = r.status===529||msg.toLowerCase().includes('overload');
+    if(isOverload && attempt<maxRetries) {
+      const wait = attempt*4000;
+      showRetryMsg(`Serveurs surchargés — nouvelle tentative dans ${wait/1000}s... (${attempt}/${maxRetries})`);
+      await sleep(wait); continue;
+    }
+    throw new Error(msg);
+  }
+}
+
+function showRetryMsg(txt) {
+  const box=document.getElementById('story-box'); let el=document.getElementById('retry-msg');
+  if(!el){el=document.createElement('p');el.id='retry-msg';el.style.cssText='font-size:13px;color:var(--warning);font-style:italic;margin:4px 0;';box.appendChild(el);}
+  el.textContent='⏳ '+txt; box.scrollTop=box.scrollHeight;
+}
+function clearRetryMsg(){const el=document.getElementById('retry-msg');if(el)el.remove();}
+
 async function callRaw(prompt) {
-  const r = await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:600,messages:[{role:'user',content:prompt}]})});
-  if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e.error?.message||`HTTP ${r.status}`);}
-  const d=await r.json(); return d.content.find(b=>b.type==='text')?.text||'';
+  const r=await fetchWithRetry({model:'claude-sonnet-4-5',max_tokens:600,messages:[{role:'user',content:prompt}]});
+  clearRetryMsg(); const d=await r.json(); return d.content.find(b=>b.type==='text')?.text||'';
 }
 
 async function callClaude(system, msg) {
   conversationHistory.push({role:'user',content:msg});
-  const r = await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:1000,system:system,messages:conversationHistory})});
-  if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e.error?.message||`HTTP ${r.status}`);}
-  const d=await r.json(); const text=d.content.find(b=>b.type==='text')?.text||'';
+  const r=await fetchWithRetry({model:'claude-sonnet-4-5',max_tokens:1000,system:system,messages:conversationHistory});
+  clearRetryMsg(); const d=await r.json(); const text=d.content.find(b=>b.type==='text')?.text||'';
   conversationHistory.push({role:'assistant',content:text}); return text;
 }
 
+/* ============ SHEET & PANEL ============ */
 function updateSheet() {
   document.getElementById('sheet-name').textContent = pc.name;
-  document.getElementById('sheet-sub').textContent = `${pc.classe} · ${selectedUni.split(' ')[0]}`;
+  document.getElementById('sheet-sub').textContent = pc.classe;
   document.getElementById('talent-val').textContent = `${pc.talent} ×${pc.talentMult}`;
-  document.getElementById('etat-row').textContent = pc.etat !== 'normal' ? `⚠ ${pc.etat}` : '';
+  document.getElementById('etat-row').textContent = pc.etat!=='normal' ? `⚠ ${pc.etat}` : '';
   setBar('bar-pv','val-pv',pc.pvCur,pc.pvMax,true);
   setBar('bar-pf','val-pf',pc.pfCur,pc.pfMax,true);
   setBar('bar-pm','val-pm',pc.pmCur,pc.pmMax,true);
-  document.getElementById('bar-chance').style.width = Math.min(100,pc.chance)+'%';
-  document.getElementById('val-chance').textContent = pc.chance;
-  const block = document.getElementById('skills-block');
-  block.innerHTML = '';
-  pc.competences.forEach(c => {
-    const row = document.createElement('div'); row.className='skill-row';
-    row.innerHTML=`<span class="skill-name">${esc(c.nom)}</span><span class="skill-val">${c.val}</span>`;
-    block.appendChild(row);
-  });
-  if(pc.affinites.length>0){const a=document.createElement('div');a.style.cssText='margin-top:5px;font-size:11px;color:var(--text-hint);font-style:italic;';a.textContent='✦ '+pc.affinites.join(' · ');block.appendChild(a);}
+  document.getElementById('bar-chance').style.width=Math.min(100,pc.chance)+'%';
+  document.getElementById('val-chance').textContent=pc.chance;
+  const block=document.getElementById('skills-block'); block.innerHTML='';
+  pc.competences.forEach(c=>{const row=document.createElement('div');row.className='skill-row';row.innerHTML=`<span class="skill-name">${esc(c.nom)}</span><span class="skill-val">${c.val}</span>`;block.appendChild(row);});
 }
 
 function setBar(bid,vid,cur,max,both) {
@@ -369,19 +577,72 @@ function setBar(bid,vid,cur,max,both) {
   document.getElementById(vid).textContent=both?`${cur}/${max}`:cur;
 }
 
+function togglePanel() {
+  panelOpen = !panelOpen;
+  const panel = document.getElementById('stats-panel');
+  panel.classList.toggle('open', panelOpen);
+  document.querySelector('.sheet-btn').textContent = panelOpen ? '▲ Stats & Inventaire' : '▼ Stats & Inventaire';
+  if(panelOpen) updateInvPanel();
+}
+
+function updateInvPanel() {
+  const invList = document.getElementById('inv-list');
+  if(pc.inventaire.length === 0) {
+    invList.innerHTML = '<span class="empty-inv">Aucun objet pour l\'instant.</span>';
+  } else {
+    invList.innerHTML = '';
+    pc.inventaire.forEach(item => {
+      const row = document.createElement('div'); row.className='inv-item';
+      row.innerHTML = `<span>${esc(item.nom)}</span><span class="inv-qty">×${item.qte}</span>`;
+      invList.appendChild(row);
+    });
+  }
+  const total = pc.or>0||pc.argent>0||pc.cuivre>0;
+  document.getElementById('gold-total').textContent = total ? `💰 ${pc.or} po · ${pc.argent} pa · ${pc.cuivre} pc` : '';
+  const affList = document.getElementById('aff-list');
+  affList.textContent = pc.affinites.length ? pc.affinites.join(' · ') : 'Aucune affinité magique';
+  document.getElementById('uni-summary').textContent = univers || '—';
+}
+
+function addItem(nom, qte=1) {
+  const existing = pc.inventaire.find(i=>i.nom.toLowerCase()===nom.toLowerCase());
+  if(existing) existing.qte += qte;
+  else pc.inventaire.push({nom, qte});
+}
+
+function removeItem(nom) {
+  const idx = pc.inventaire.findIndex(i=>i.nom.toLowerCase()===nom.toLowerCase());
+  if(idx>=0) { pc.inventaire[idx].qte--; if(pc.inventaire[idx].qte<=0) pc.inventaire.splice(idx,1); }
+}
+
+/* ============ PARSE & DISPLAY ============ */
 function parseDisplay(text, playerAction) {
   const am = text.match(/ACTIONS:\s*(.+)/i);
   let narr = text.replace(/ACTIONS:.*/is,'').trim();
+
   narr = narr.replace(/HP:([+-]\d+)/gi,(_,d)=>{pc.pvCur=Math.max(0,Math.min(pc.pvMax,pc.pvCur+parseInt(d)));return'';});
   narr = narr.replace(/PF:([+-]\d+)/gi,(_,d)=>{pc.pfCur=Math.max(0,Math.min(pc.pfMax,pc.pfCur+parseInt(d)));return'';});
   narr = narr.replace(/PM:([+-]\d+)/gi,(_,d)=>{pc.pmCur=Math.max(0,Math.min(pc.pmMax,pc.pmCur+parseInt(d)));return'';});
   narr = narr.replace(/CHANCE:\+(\d+)/gi,(_,v)=>{pc.chance=Math.min(100,pc.chance+parseInt(v));return'';});
   narr = narr.replace(/ETAT:(\w+)/gi,(_,e)=>{pc.etat=e.toLowerCase();return'';});
-  narr = narr.replace(/TRESOR:([^.\n]+)/gi,(_,d)=>{addStory(`<p class="story-event">💰 ${esc(d.trim())}</p>`);return'';});
+  narr = narr.replace(/ITEM_DEL:([^\n|]+)/gi,(_,n)=>{removeItem(n.trim());addStory(`<p class="story-event">— ${esc(n.trim())} retiré de l'inventaire.</p>`);return'';});
+  narr = narr.replace(/ITEM:([^\n|]+)/gi,(_,n)=>{addItem(n.trim());addStory(`<p class="story-event">+ ${esc(n.trim())} ajouté à l'inventaire.</p>`);return'';});
+  narr = narr.replace(/MONEY:([+-])(\d+)(po|pa|pc)/gi,(_,sign,val,type)=>{
+    const v=parseInt(val)*(sign==='-'?-1:1);
+    if(type==='po') pc.or=Math.max(0,pc.or+v);
+    else if(type==='pa') pc.argent=Math.max(0,pc.argent+v);
+    else pc.cuivre=Math.max(0,pc.cuivre+v);
+    const label=sign==='-'?`− ${val} ${type}`:`+ ${val} ${type}`;
+    addStory(`<p class="story-event">💰 ${label}</p>`);
+    return'';
+  });
   narr = narr.trim();
+
   if(playerAction) addStory(`<p class="story-player">» ${esc(playerAction)}</p>`);
   addStory(`<p class="story-narrator">${esc(narr)}</p>`);
   updateSheet();
+  if(panelOpen) updateInvPanel();
+
   const ar=document.getElementById('quick-actions'); ar.innerHTML='';
   if(am){am[1].split('|').map(a=>a.trim().replace(/^\[|\]$/g,'')).forEach(a=>{if(!a)return;const b=document.createElement('button');b.className='quick-action';b.textContent=a;b.onclick=()=>{document.getElementById('player-input').value=a;sendAction();};ar.appendChild(b);});}
 }
@@ -390,6 +651,7 @@ function addStory(html){const b=document.getElementById('story-box');const d=doc
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
 
+/* ============ SEND ACTION ============ */
 async function sendAction() {
   if(isLoading) return;
   const input=document.getElementById('player-input');
@@ -397,22 +659,39 @@ async function sendAction() {
   isLoading=true; input.value='';
   document.getElementById('send-btn').disabled=true;
   document.getElementById('quick-actions').innerHTML='';
+
   const de20=Math.floor(Math.random()*20)+1;
   if(de20===20) addStory(`<p class="story-critical">✦ Le destin sourit — dé de chance : 20 !</p>`);
   else if(de20===1) addStory(`<p class="story-critical">✦ Le destin tourne le dos — dé de chance : 1...</p>`);
+
   const loadEl=document.createElement('p'); loadEl.className='story-narrator loading-dots'; loadEl.innerHTML='<span>.</span><span>.</span><span>.</span>';
   document.getElementById('story-box').appendChild(loadEl); document.getElementById('story-box').scrollTop=document.getElementById('story-box').scrollHeight;
+
   let msg=action;
-  if(de20===20) msg+=` [DÉ: 20 — RÉUSSITE CRITIQUE, moment exceptionnel]`;
-  else if(de20===1) msg+=` [DÉ: 1 — ÉCHEC CRITIQUE, complication dramatique]`;
+  if(de20===20) msg+=` [DÉ: 20 — RÉUSSITE CRITIQUE]`;
+  else if(de20===1) msg+=` [DÉ: 1 — ÉCHEC CRITIQUE]`;
   else msg+=` [DÉ: ${de20}]`;
+
   try {
     const resp=await callClaude(buildSystem(),msg);
     loadEl.remove(); parseDisplay(resp,action);
-  } catch(e) { loadEl.remove(); addStory(`<p class="story-narrator" style="color:var(--danger)">Erreur: ${esc(e.message)}</p>`); }
+    saveGame();
+  } catch(e) {
+    loadEl.remove(); clearRetryMsg();
+    const isOverload=e.message.toLowerCase().includes('overload');
+    const errMsg=isOverload?'Serveurs surchargés. Réessayez dans quelques instants.':'Erreur : '+e.message;
+    addStory(`<p class="story-event" id="err-block">⚠ ${esc(errMsg)}</p>`);
+    if(isOverload){
+      const retryBtn=document.createElement('button'); retryBtn.className='quick-action';
+      retryBtn.textContent='↺ Réessayer'; retryBtn.style.cssText='border-color:var(--warning);color:var(--warning);margin-top:4px;';
+      retryBtn.onclick=()=>{document.getElementById('err-block')?.remove();retryBtn.remove();document.getElementById('player-input').value=action;sendAction();};
+      document.getElementById('story-box').appendChild(retryBtn); document.getElementById('story-box').scrollTop=document.getElementById('story-box').scrollHeight;
+    }
+  }
   isLoading=false; document.getElementById('send-btn').disabled=false; input.focus();
 }
 
+/* ============ RESTART ============ */
 function restartGame() {
   document.getElementById('game-screen').classList.add('hidden');
   document.getElementById('setup-screen').classList.remove('hidden');
@@ -420,8 +699,10 @@ function restartGame() {
   document.getElementById('quick-actions').innerHTML='';
   document.getElementById('start-btn').disabled=false;
   document.getElementById('start-btn').textContent='⚔ Forger le Personnage & Commencer ⚔';
-  conversationHistory=[];
-  pc={name:'',classe:'',talent:'Normal',talentMult:1.0,pvMax:80,pvCur:80,pfMax:80,pfCur:80,pmMax:40,pmCur:40,chance:10,competences:[],affinites:[],etat:'normal'};
+  conversationHistory=[]; univers=''; charBackground='';
+  pc={name:'',classe:'',talent:'Normal',talentMult:1.0,pvMax:80,pvCur:80,pfMax:80,pfCur:80,pmMax:40,pmCur:40,chance:10,competences:[],affinites:[],etat:'normal',inventaire:[],or:0,argent:0,cuivre:0};
+  if(panelOpen){togglePanel();}
+  checkSavedGame();
 }
 </script>
 </body>
